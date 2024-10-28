@@ -91,7 +91,8 @@ class GalleryFragment : Fragment() {
                     word.name.toLowerCase(Locale.getDefault()).contains(searchText) ||
                             word.meaning.toLowerCase(Locale.getDefault()).contains(searchText) ||
                             word.article.toLowerCase(Locale.getDefault()).contains(searchText) ||
-                            word.plural.toLowerCase(Locale.getDefault()).contains(searchText)
+                            word.plural.toLowerCase(Locale.getDefault()).contains(searchText) ||
+                            word.part_of_speech.toLowerCase(Locale.getDefault()).contains(searchText)
                 }
                 adapter.filterList(ArrayList(filteredList))
             }
@@ -146,7 +147,7 @@ class GalleryFragment : Fragment() {
             val outputStreamWriter = OutputStreamWriter(fileOutputStream)
 
             for (item in dataToSave) {
-                val line = "${item.article} - ${item.name} - ${item.plural} - ${item.meaning}\n"
+                val line = "${item.article} - ${item.name} - ${item.part_of_speech} - ${item.plural} - ${item.meaning}\n"
                 outputStreamWriter.write(line)
             }
 

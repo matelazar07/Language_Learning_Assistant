@@ -28,6 +28,13 @@
         android:textSize="16sp"/>
 
     <TextView
+        android:id="@+id/tvPartofspeech"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Part of speech"
+        android:textSize="16sp"/>
+
+    <TextView
         android:id="@+id/tvPlural"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

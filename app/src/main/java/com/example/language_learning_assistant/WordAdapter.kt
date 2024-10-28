@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class WordAdapter(private var showDeleteButton: Boolean = false) : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
+class WordAdapter() : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
     private var wrdList: ArrayList<WordModel> = ArrayList()
     private var onClickItem: ((WordModel) -> Unit)? = null
     private var onClickDeleteItem: ((WordModel) -> Unit)? = null
@@ -58,14 +58,16 @@ class WordAdapter(private var showDeleteButton: Boolean = false) : RecyclerView.
         private val id: TextView = view.findViewById(R.id.tvId)
         private val article: TextView = view.findViewById(R.id.tvArticle)
         private val name: TextView = view.findViewById(R.id.tvName)
+        private val part_of_speech: TextView = view.findViewById(R.id.tvPartofspeech)
         private val meaning: TextView = view.findViewById(R.id.tvMeaning)
         private val plural: TextView = view.findViewById(R.id.tvPlural)
-        val btnDelete: Button = view.findViewById(R.id.btnDelete)
+        private val btnDelete: Button = view.findViewById(R.id.btnDelete)
         fun bind(word: WordModel, onClickDeleteItem: ((WordModel) -> Unit)?) {
             // Beállítjuk a TextView-ok szövegét a WordModel adatai alapján
             id.text = word.id.toString()
             article.text = word.article
             name.text = word.name
+            part_of_speech.text=word.part_of_speech
             meaning.text = word.meaning
             plural.text = word.plural
 

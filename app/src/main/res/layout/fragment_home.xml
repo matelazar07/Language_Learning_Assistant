@@ -28,6 +28,15 @@
         android:hint="Írd be a német szót!" />
 
     <EditText
+        android:id="@+id/edPartofspeech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Írd be a német szó szófaját!" />
+
+    <EditText
         android:id="@+id/edPlural"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
