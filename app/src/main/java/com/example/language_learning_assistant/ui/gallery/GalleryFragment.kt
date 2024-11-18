@@ -1,7 +1,13 @@
 package com.example.language_learning_assistant.ui.gallery
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.Manifest
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -14,6 +20,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -138,11 +146,11 @@ class GalleryFragment : Fragment() {
         }
     }
 
-    private fun saveDataToTxtFile() {
+    private fun saveDataToTxtFile(): Boolean {
         val dataToSave = wordList
         val fileName = "mentett_adatok.txt"
 
-        try {
+        return try {
             val fileOutputStream = requireContext().openFileOutput(fileName, Context.MODE_PRIVATE)
             val outputStreamWriter = OutputStreamWriter(fileOutputStream)
 
@@ -153,28 +161,168 @@ class GalleryFragment : Fragment() {
 
             outputStreamWriter.close()
             Toast.makeText(requireContext(), "Adatok mentve: $fileName", Toast.LENGTH_SHORT).show()
+            true
         } catch (e: Exception) {
             Toast.makeText(requireContext(), "Hiba történt a mentés során.", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
+            false
+        }
+    }
+
+    private val STORAGE_PERMISSION_CODE = 100
+    private val NOTIFICATION_PERMISSION_CODE = 101
+
+    private fun checkAndRequestPermissions() {
+        val permissionsToRequest = mutableListOf<String>()
+
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.Q) {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            }
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                permissionsToRequest.add(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+
+        if (permissionsToRequest.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                permissionsToRequest.toTypedArray(),
+                STORAGE_PERMISSION_CODE
+            )
+        } else {
+            proceedWithDownload()
         }
     }
 
     private fun downloadData() {
+        checkAndRequestPermissions()
+    }
+
+    private fun proceedWithDownload() {
         val fileName = "mentett_adatok.txt"
-        val sourceFile = File(requireContext().filesDir, fileName)
-        val destinationFile = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            fileName
-        )
 
         try {
-            sourceFile.copyTo(destinationFile, overwrite = true)
+            val sourceFile = File(requireContext().filesDir, fileName)
+            if (!sourceFile.exists()) {
+                saveDataToTxtFile()
+                if (!sourceFile.exists()) {
+                    Toast.makeText(requireContext(), "Hiba a fájl létrehozása során.", Toast.LENGTH_SHORT).show()
+                    return
+                }
+            }
 
-            // Notify user of download completion (optional)
-            Toast.makeText(requireContext(), "Fájl letöltve: $fileName", Toast.LENGTH_SHORT).show()
+            AlertDialog.Builder(requireContext())
+                .setTitle("Fájl letöltése")
+                .setMessage("Szeretnéd letölteni a $fileName fájlt?")
+                .setPositiveButton("Igen") { _, _ ->
+                    try {
+                        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                        if (!downloadsDir.exists()) {
+                            downloadsDir.mkdirs()
+                        }
+
+                        val destinationFile = File(downloadsDir, fileName)
+                        sourceFile.inputStream().use { input ->
+                            destinationFile.outputStream().use { output ->
+                                input.copyTo(output)
+                            }
+                        }
+
+                        showDownloadNotification(fileName)
+                        Toast.makeText(requireContext(), "Fájl sikeresen letöltve", Toast.LENGTH_SHORT).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Hiba a fájl mentése során: ${e.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        e.printStackTrace()
+                    }
+                }
+                .setNegativeButton("Nem", null)
+                .show()
+
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), "${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Hiba a letöltés során: ${e.message}", Toast.LENGTH_SHORT).show()
             e.printStackTrace()
+        }
+    }
+
+    private fun showDownloadNotification(fileName: String) {
+        val channelId = "download_channel"
+        val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                "Downloads",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "Download notifications"
+            }
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        val builder = NotificationCompat.Builder(requireContext(), channelId)
+            .setSmallIcon(android.R.drawable.ic_menu_save)
+            .setContentTitle("Letöltés befejezve")
+            .setContentText("$fileName sikeresen letöltve")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+
+        val intent = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            Intent(DownloadManager.ACTION_VIEW_DOWNLOADS).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+        } else {
+            Intent(Intent.ACTION_VIEW).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                setDataAndType(Uri.fromFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)), "*/*")
+            }
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            requireContext(),
+            0,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
+        builder.setContentIntent(pendingIntent)
+        notificationManager.notify(1, builder.build())
+    }
+
+    @Deprecated("")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode) {
+            STORAGE_PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                    proceedWithDownload()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Engedélyek szükségesek a letöltéshez",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 
