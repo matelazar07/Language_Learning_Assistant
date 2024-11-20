@@ -31,6 +31,7 @@ import com.example.language_learning_assistant.SQLiteHelper
 import com.example.language_learning_assistant.WordAdapter
 import com.example.language_learning_assistant.WordModel
 import com.example.language_learning_assistant.databinding.FragmentGalleryBinding
+//import com.example.language_learning_assistant.databinding.FragmentVocabularyBinding
 import java.io.File
 import java.io.OutputStreamWriter
 import java.util.Locale
@@ -38,6 +39,7 @@ import java.util.Locale
 class GalleryFragment : Fragment() {
 
     private var _binding: FragmentGalleryBinding? = null
+//    private var _binding: FragmentVocabularyBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
@@ -52,6 +54,7 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+//        _binding = FragmentVocabularyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         edSearch = binding.edSearch
