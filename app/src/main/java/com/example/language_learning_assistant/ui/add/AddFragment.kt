@@ -93,6 +93,8 @@ class AddFragment : Fragment() {
                 Toast.makeText(requireContext(), "Szó felvétel sikeres", Toast.LENGTH_SHORT).show()
                 clearEditText()
 
+                getWords()
+
                 // Navigate back to VocabularyFragment
                 activity?.supportFragmentManager?.popBackStack()
             } else {
