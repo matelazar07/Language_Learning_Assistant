@@ -15,13 +15,29 @@
     <!-- Egyéb meglévő sztringek -->
     <string name="app_logo">Germany App Logo</string>
 
+    <!-- VOCABULARY VIEW -->
+    <string name="vocab_TITLE">NÉMET-MAGYAR SZÓTÁRFÜZET</string>
+    <string name="vocab_search_BUTTON">Keresés</string>
+    <string name="vocab_save_BUTTON">Mentés</string>
+    <string name="vocab_download_BUTTON">Letöltés</string>
+
     <!-- ADD VIEW -->
-    <string name="add_TITLE">NÉMET MAGYAR SZÓTÁRFÜZET</string>
+    <string name="add_TITLE">SZÓ FELVÉTELE</string>
     <string name="add_word">Német szó</string>
     <string name="add_word_article">Névelő</string>
     <string name="add_word_type">Szófaj</string>
     <string name="add_word_plural">Többesszám</string>
     <string name="add_word_meaning">Jelentés</string>
     <string name="add_BUTTON">Hozzáadás</string>
+
+    <!-- WORD ITEMS -->
+    <string name="item_id">Id</string>
+    <string name="item_article">Article</string>
+    <string name="item_word">Word</string>
+    <string name="item_word_type">Type</string>
+    <string name="item_plural">Plural</string>
+    <string name="item_meaning">Meaning</string>
+    <string name="item_edit_BUTTON">Szerkesztés</string>
+    <string name="item_delete_BUTTON">Törlés</string>
 
 </resources>

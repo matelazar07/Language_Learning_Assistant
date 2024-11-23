@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -57,8 +56,8 @@ class WordAdapter() : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
     class WordViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val id: TextView = view.findViewById(R.id.tvId)
         private val article: TextView = view.findViewById(R.id.tvArticle)
-        private val name: TextView = view.findViewById(R.id.tvName)
-        private val part_of_speech: TextView = view.findViewById(R.id.tvPartofspeech)
+        private val name: TextView = view.findViewById(R.id.tvWord)
+        private val wordType: TextView = view.findViewById(R.id.tvType)
         private val meaning: TextView = view.findViewById(R.id.tvMeaning)
         private val plural: TextView = view.findViewById(R.id.tvPlural)
         private val btnDelete: Button = view.findViewById(R.id.btnDelete)
@@ -67,7 +66,7 @@ class WordAdapter() : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
             id.text = word.id.toString()
             article.text = word.article
             name.text = word.name
-            part_of_speech.text=word.part_of_speech
+            wordType.text=word.part_of_speech
             meaning.text = word.meaning
             plural.text = word.plural
 
