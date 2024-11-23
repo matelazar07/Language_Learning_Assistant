@@ -5,72 +5,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ui.gallery.GalleryFragment">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/skranji"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:text="HOZZÁADOTT SZAVAK"
+        android:textColor="#FFE900"
+        android:textSize="26sp"
+        android:textStyle="bold|italic"
+        android:background="@color/black"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#FD0000"
+        android:padding="8dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp">
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:text="Keresés" />
+
+        <EditText
+            android:id="@+id/edSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_border"
+            android:hint="Keresés"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Keresés:" />
-
-        <EditText
-            android:id="@+id/edSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Keresés"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/btnSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Keresés" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mentés:" />
+        android:gravity="center"
+        android:background="#FD0000"
+        android:padding="8dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp">
 
         <Button
             android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mentés" />
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Mentés"/>
     </LinearLayout>
 
-    <Space
-        android:layout_width="8dp"
-        android:layout_height="10dp" />
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Letöltés:" />
+        android:background="#FD0000"
+        android:padding="8dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="7dp">
 
         <Button
             android:id="@+id/btnDownload"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Letöltés" />
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="Letöltés"
+            android:layout_marginEnd="0dp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

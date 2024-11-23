@@ -5,9 +5,45 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:paddingTop="7dp"
     android:id="@+id/myToolbar"
+    android:background="@color/white"
     tools:context=".MainActivity">
 
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="65dp"
+        android:layout_height="62dp"
+        android:layout_gravity="center|top"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/germany_app_logo" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="7dp"
+        android:fontFamily="@font/skranji"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:text="NÉMET MAGYAR SZÓTÁRFÜZET"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold|italic"
+        android:background="#FFE900"/>
+
+    <EditText
+        android:id="@+id/edName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/edit_text_border"
+        android:hint="Írd be a német szót!"
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/edArticle"
@@ -16,16 +52,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:hint="Írd be a német szó névelőjét!" />
-
-    <EditText
-        android:id="@+id/edName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:hint="Írd be a német szót!" />
+        android:background="@drawable/edit_text_border"
+        android:hint="Írd be a német szó névelőjét!"
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/edPartofspeech"
@@ -34,7 +63,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:hint="Írd be a német szó szófaját!" />
+        android:background="@drawable/edit_text_border"
+        android:hint="Írd be a német szó szófaját!"
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/edPlural"
@@ -43,7 +74,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:hint="Írd be a német szó többesszámát!" />
+        android:background="@drawable/edit_text_border"
+        android:hint="Írd be a német szó többesszámát!"
+        android:textColor="@color/black" />
 
     <EditText
         android:id="@+id/edMeaning"
@@ -52,7 +85,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:hint="Írd be a német szó jelentését!" />
+        android:background="@drawable/edit_text_border"
+        android:hint="Írd be a német szó jelentését!"
+        android:textColor="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"

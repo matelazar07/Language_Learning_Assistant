@@ -12,4 +12,7 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="gallery_activity_label">Gallery</string>
 
+    <!-- Egyéb meglévő sztringek -->
+    <string name="app_logo">Germany App Logo</string>
+
 </resources>
