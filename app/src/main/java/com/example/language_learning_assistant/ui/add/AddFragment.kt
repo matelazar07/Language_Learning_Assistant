@@ -1,6 +1,5 @@
-package com.example.language_learning_assistant.ui.home
+package com.example.language_learning_assistant.ui.add
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +15,11 @@ import com.example.language_learning_assistant.R
 import com.example.language_learning_assistant.SQLiteHelper
 import com.example.language_learning_assistant.WordAdapter
 import com.example.language_learning_assistant.WordModel
-import com.example.language_learning_assistant.databinding.FragmentHomeBinding
-import com.example.language_learning_assistant.ui.gallery.GalleryFragment
+import com.example.language_learning_assistant.databinding.FragmentAddBinding
 
-class HomeFragment : Fragment() {
+class AddFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var edArticle: EditText
@@ -39,7 +37,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentAddBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         initView(root)
@@ -120,7 +118,7 @@ class HomeFragment : Fragment() {
 
     private fun initView(view: View) {
         edName = view.findViewById(R.id.edName)
-        edPartofspeech = view.findViewById(R.id.edPartofspeech)
+        edPartofspeech = view.findViewById(R.id.edWordType)
         edArticle = view.findViewById(R.id.edArticle)
         edPlural = view.findViewById(R.id.edPlural)
         edMeaning = view.findViewById(R.id.edMeaning)

@@ -15,4 +15,13 @@
     <!-- Egyéb meglévő sztringek -->
     <string name="app_logo">Germany App Logo</string>
 
+    <!-- ADD VIEW -->
+    <string name="add_TITLE">NÉMET MAGYAR SZÓTÁRFÜZET</string>
+    <string name="add_word">Német szó</string>
+    <string name="add_word_article">Névelő</string>
+    <string name="add_word_type">Szófaj</string>
+    <string name="add_word_plural">Többesszám</string>
+    <string name="add_word_meaning">Jelentés</string>
+    <string name="add_BUTTON">Hozzáadás</string>
+
 </resources>

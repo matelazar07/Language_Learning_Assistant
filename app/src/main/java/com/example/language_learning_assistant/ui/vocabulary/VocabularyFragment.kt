@@ -1,4 +1,4 @@
-package com.example.language_learning_assistant.ui.gallery
+package com.example.language_learning_assistant.ui.vocabulary
 
 import android.app.DownloadManager
 import android.app.NotificationChannel
@@ -17,7 +17,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -26,22 +25,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.language_learning_assistant.R
 import com.example.language_learning_assistant.SQLiteHelper
 import com.example.language_learning_assistant.WordAdapter
 import com.example.language_learning_assistant.WordModel
-import com.example.language_learning_assistant.databinding.FragmentGalleryBinding
-//import com.example.language_learning_assistant.databinding.FragmentVocabularyBinding
+import com.example.language_learning_assistant.databinding.FragmentVocabularyBinding
 import java.io.File
 import java.io.OutputStreamWriter
 import java.util.Locale
 
-class GalleryFragment : Fragment() {
+class VocabularyFragment : Fragment() {
 
-//    asddasdasdas
-
-    private var _binding: FragmentGalleryBinding? = null
-//    private var _binding: FragmentVocabularyBinding? = null
+    private var _binding: FragmentVocabularyBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
@@ -55,8 +49,7 @@ class GalleryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-//        _binding = FragmentVocabularyBinding.inflate(inflater, container, false)
+        _binding = FragmentVocabularyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         edSearch = binding.edSearch
