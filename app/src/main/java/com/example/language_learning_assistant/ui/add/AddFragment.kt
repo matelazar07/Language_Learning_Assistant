@@ -74,18 +74,15 @@ class AddFragment : Fragment() {
     private fun addWords() {
         val article = edArticle.text.toString()
         val name = edName.text.toString()
-        val  part_of_speech = edPartofspeech.text.toString()
+        val part_of_speech = edPartofspeech.text.toString()
         val meaning = edMeaning.text.toString()
         val plural = edPlural.text.toString()
+
         if (name.isEmpty() || meaning.isEmpty()) {
             Toast.makeText(requireContext(), "Kérjük írja be a kötelező mezőket", Toast.LENGTH_SHORT).show()
             edName.error = "Kötelező mező"
             edMeaning.error = "Kötelező mező"
-            edName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            edMeaning.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         } else {
-            edName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            edMeaning.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             edName.error = null
             edMeaning.error = null
 
@@ -96,12 +93,14 @@ class AddFragment : Fragment() {
                 Toast.makeText(requireContext(), "Szó felvétel sikeres", Toast.LENGTH_SHORT).show()
                 clearEditText()
 
-                getWords()
+                // Navigate back to VocabularyFragment
+                activity?.supportFragmentManager?.popBackStack()
             } else {
                 Toast.makeText(requireContext(), "Szó nincs felvétel", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 
     private fun getWords() {
         val wrdList = sqLiteHelper.getAllWords()
