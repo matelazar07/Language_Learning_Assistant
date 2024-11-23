@@ -38,6 +38,8 @@ import java.util.Locale
 
 class GalleryFragment : Fragment() {
 
+//    asddasdasdas
+
     private var _binding: FragmentGalleryBinding? = null
 //    private var _binding: FragmentVocabularyBinding? = null
     private val binding get() = _binding!!
