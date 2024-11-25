@@ -31,7 +31,7 @@ class AddFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var sqLiteHelper: SQLiteHelper
     private var adapter: WordAdapter? = null
-    private var wordToEdit: WordModel? = null // Track if editing a word
+    private var wordToEdit: WordModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,18 +44,17 @@ class AddFragment : Fragment() {
         initRecyclerView()
         sqLiteHelper = SQLiteHelper(requireContext())
 
-        // Check if a WordModel is passed for editing
         wordToEdit = arguments?.getParcelable("word")
         wordToEdit?.let { word ->
             preFillFields(word)
-            btnAdd.text = "Frissítés" // Change button text to indicate update mode
+            btnAdd.text = "Frissítés"
         }
 
         btnAdd.setOnClickListener {
             if (wordToEdit == null) {
-                addWords() // Add a new word
+                addWords()
             } else {
-                updateWord() // Update an existing word
+                updateWord()
             }
         }
 

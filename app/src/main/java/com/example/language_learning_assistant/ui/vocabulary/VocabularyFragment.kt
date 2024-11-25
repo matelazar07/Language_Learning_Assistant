@@ -62,47 +62,39 @@ class VocabularyFragment : Fragment() {
 
 
 
-        // Initialize adapter and RecyclerView
         adapter = WordAdapter()
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        // Get the words from arguments
         wordList = arguments?.getParcelableArrayList("WORD_LIST") ?: ArrayList()
-        adapter.addItems(wordList) // Update adapter with the initial word list
+        adapter.addItems(wordList)
 
         sqLiteHelper = SQLiteHelper(requireContext())
-        getWords() // Load words from the database
+        getWords()
 
-        // Save button to save data to a file
         val btnSave = binding.btnSave
         btnSave.setOnClickListener {
             saveDataToTxtFile()
         }
 
         adapter.setOnClickEditItem { word ->
-            // Create a bundle with the word data
             val bundle = Bundle().apply {
-                putParcelable("word", word) // Ensure WordModel implements Parcelable
+                putParcelable("word", word)
             }
 
-            // Navigate to AddFragment using the action defined in mobile_navigation.xml
             findNavController().navigate(R.id.action_nav_vocabulary_to_nav_add, bundle)
         }
 
 
 
-        // Download button to download data
         val btnDownload = binding.btnDownload
         btnDownload.setOnClickListener {
             downloadData()
         }
 
-        // Set up delete item click listener
         adapter.setOnClickDeleteItem { deleteWord(it.id) }
 
-        // Setup search functionality
         edSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -125,8 +117,8 @@ class VocabularyFragment : Fragment() {
     }
 
     private fun getWords() {
-        wordList = sqLiteHelper.getAllWords() // Fetch all words from the database
-        adapter.addItems(wordList) // Update the adapter with the new list
+        wordList = sqLiteHelper.getAllWords()
+        adapter.addItems(wordList)
     }
 
     private fun toggleSearchVisibility() {

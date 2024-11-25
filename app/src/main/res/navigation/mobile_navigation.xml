@@ -17,7 +17,6 @@
         android:label="@string/menu_vocabulary"
         tools:layout="@layout/fragment_vocabulary">
 
-        <!-- Define action to navigate to AddFragment -->
         <action
             android:id="@+id/action_nav_vocabulary_to_nav_add"
             app:destination="@id/nav_add" />

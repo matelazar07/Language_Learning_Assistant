@@ -12,7 +12,7 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
     private var wrdList: ArrayList<WordModel> = ArrayList()
     private var onClickItem: ((WordModel) -> Unit)? = null
     private var onClickDeleteItem: ((WordModel) -> Unit)? = null
-    private var onClickEditItem: ((WordModel) -> Unit)? = null // New callback for Edit Button
+    private var onClickEditItem: ((WordModel) -> Unit)? = null
 
     fun addItems(items: ArrayList<WordModel>) {
         this.wrdList = items
@@ -42,7 +42,7 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val word = wrdList[position]
-        holder.bind(word, onClickDeleteItem, onClickEditItem) // Pass the new callback
+        holder.bind(word, onClickDeleteItem, onClickEditItem)
     }
 
     fun filterList(filteredList: ArrayList<WordModel>) {
@@ -58,14 +58,13 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
         private val meaning: TextView = view.findViewById(R.id.tvMeaning)
         private val plural: TextView = view.findViewById(R.id.tvPlural)
         private val btnDelete: Button = view.findViewById(R.id.btnDelete)
-        private val btnEdit: Button = view.findViewById(R.id.btnEdit) // Reference to Edit Button
+        private val btnEdit: Button = view.findViewById(R.id.btnEdit)
 
         fun bind(
             word: WordModel,
             onClickDeleteItem: ((WordModel) -> Unit)?,
-            onClickEditItem: ((WordModel) -> Unit)? // New callback parameter
+            onClickEditItem: ((WordModel) -> Unit)?
         ) {
-            // Set the TextView values based on WordModel attributes
             id.text = word.id.toString()
             article.text = word.article
             name.text = word.name
@@ -73,12 +72,10 @@ class WordAdapter : RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
             meaning.text = word.meaning
             plural.text = word.plural
 
-            // Set Delete Button click event
             btnDelete.setOnClickListener {
                 onClickDeleteItem?.invoke(word)
             }
 
-            // Set Edit Button click event
             btnEdit.setOnClickListener {
                 onClickEditItem?.invoke(word)
             }

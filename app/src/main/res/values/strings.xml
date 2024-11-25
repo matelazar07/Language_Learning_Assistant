@@ -7,8 +7,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_vocabulary">Vocabulary</string>
-    <string name="menu_add">Add</string>
+    <string name="menu_vocabulary">Szótárfüzet</string>
+    <string name="menu_add">Felvétel / Szerkesztés</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="gallery_activity_label">Gallery</string>
 
@@ -22,7 +22,7 @@
     <string name="vocab_download_BUTTON">Letöltés</string>
 
     <!-- ADD VIEW -->
-    <string name="add_TITLE">SZÓ FELVÉTELE</string>
+    <string name="add_TITLE">SZÓ FELVÉTELE / SZERKESZTÉSE</string>
     <string name="add_word">Német szó</string>
     <string name="add_word_article">Névelő</string>
     <string name="add_word_type">Szófaj</string>
