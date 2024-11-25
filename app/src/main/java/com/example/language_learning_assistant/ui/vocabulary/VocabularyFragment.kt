@@ -23,8 +23,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.language_learning_assistant.R
 import com.example.language_learning_assistant.SQLiteHelper
 import com.example.language_learning_assistant.WordAdapter
 import com.example.language_learning_assistant.WordModel
@@ -78,6 +80,18 @@ class VocabularyFragment : Fragment() {
         btnSave.setOnClickListener {
             saveDataToTxtFile()
         }
+
+        adapter.setOnClickEditItem { word ->
+            // Create a bundle with the word data
+            val bundle = Bundle().apply {
+                putParcelable("word", word) // Ensure WordModel implements Parcelable
+            }
+
+            // Navigate to AddFragment using the action defined in mobile_navigation.xml
+            findNavController().navigate(R.id.action_nav_vocabulary_to_nav_add, bundle)
+        }
+
+
 
         // Download button to download data
         val btnDownload = binding.btnDownload

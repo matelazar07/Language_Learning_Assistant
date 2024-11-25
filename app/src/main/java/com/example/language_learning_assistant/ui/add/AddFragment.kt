@@ -31,7 +31,7 @@ class AddFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var sqLiteHelper: SQLiteHelper
     private var adapter: WordAdapter? = null
-    private var wrd: WordModel? = null
+    private var wordToEdit: WordModel? = null // Track if editing a word
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,23 +44,20 @@ class AddFragment : Fragment() {
         initRecyclerView()
         sqLiteHelper = SQLiteHelper(requireContext())
 
-        btnAdd.setOnClickListener { addWords() }
-
-
-
-        adapter = WordAdapter()
-        adapter?.setOnClickItem {
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
-            edArticle.setText(it.article)
-            edName.setText(it.name)
-            edPartofspeech.setText(it.part_of_speech)
-            edMeaning.setText(it.meaning)
-            edPlural.setText(it.plural)
-            wrd = it
+        // Check if a WordModel is passed for editing
+        wordToEdit = arguments?.getParcelable("word")
+        wordToEdit?.let { word ->
+            preFillFields(word)
+            btnAdd.text = "Frissítés" // Change button text to indicate update mode
         }
 
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        btnAdd.setOnClickListener {
+            if (wordToEdit == null) {
+                addWords() // Add a new word
+            } else {
+                updateWord() // Update an existing word
+            }
+        }
 
         return root
     }
@@ -70,6 +67,7 @@ class AddFragment : Fragment() {
         adapter = WordAdapter()
         recyclerView.adapter = adapter
     }
+
 
     private fun addWords() {
         val article = edArticle.text.toString()
@@ -103,6 +101,48 @@ class AddFragment : Fragment() {
         }
     }
 
+    private fun updateWord() {
+        val article = edArticle.text.toString()
+        val name = edName.text.toString()
+        val part_of_speech = edPartofspeech.text.toString()
+        val meaning = edMeaning.text.toString()
+        val plural = edPlural.text.toString()
+
+        if (name.isEmpty() || meaning.isEmpty()) {
+            Toast.makeText(requireContext(), "Kérjük írja be a kötelező mezőket", Toast.LENGTH_SHORT).show()
+            edName.error = "Kötelező mező"
+            edMeaning.error = "Kötelező mező"
+        } else {
+            edName.error = null
+            edMeaning.error = null
+
+            wordToEdit?.let { word ->
+                word.article = article
+                word.name = name
+                word.part_of_speech = part_of_speech
+                word.meaning = meaning
+                word.plural = plural
+
+                val status = sqLiteHelper.updateWord(word)
+                if (status > -1) {
+                    Toast.makeText(requireContext(), "Szó frissítése sikeres", Toast.LENGTH_SHORT).show()
+
+                    // Navigate back to VocabularyFragment
+                    activity?.supportFragmentManager?.popBackStack()
+                } else {
+                    Toast.makeText(requireContext(), "Szó frissítése sikertelen", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun preFillFields(word: WordModel) {
+        edArticle.setText(word.article)
+        edName.setText(word.name)
+        edPartofspeech.setText(word.part_of_speech)
+        edMeaning.setText(word.meaning)
+        edPlural.setText(word.plural)
+    }
 
     private fun getWords() {
         val wrdList = sqLiteHelper.getAllWords()
@@ -117,6 +157,7 @@ class AddFragment : Fragment() {
         edPlural.setText("")
     }
 
+
     private fun initView(view: View) {
         edName = view.findViewById(R.id.edName)
         edPartofspeech = view.findViewById(R.id.edWordType)
@@ -126,8 +167,6 @@ class AddFragment : Fragment() {
         btnAdd = view.findViewById(R.id.btnAdd)
         recyclerView = view.findViewById(R.id.recyclerView)
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()
