@@ -1,59 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:layout_marginBottom="3dp"
+    android:padding="8dp"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:background="@drawable/background_round"
+    android:backgroundTint="@color/material_on_surface_stroke">
 
-    <TextView
-        android:id="@+id/tvId"
+    <!-- Text Section -->
+    <LinearLayout
+        android:id="@+id/llTextSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnContainer"
+        android:layout_marginEnd="8dp">
+
+        <TextView
+            android:id="@+id/tvId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_id"
+            android:textSize="16sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tvArticle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_article"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tvWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_word"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_word_type"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tvPlural"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_plural"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tvMeaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_meaning"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Button Container -->
+    <LinearLayout
+        android:id="@+id/btnContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Id"
-        android:textSize="16sp"
-        android:visibility="gone"/>
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/tvArticle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Article"
-        android:textSize="16sp"/>
+        <!-- Edit Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnEdit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="8dp"
+            android:contentDescription="@string/item_edit_BUTTON"
+            android:layout_marginRight="5dp"
+            app:icon="@drawable/ic_edit"
+            app:iconTint="@color/black"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp" />
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name"
-        android:textSize="16sp"/>
+        <!-- Delete Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDelete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="8dp"
+            android:contentDescription="@string/item_delete_BUTTON"
+            app:icon="@drawable/ic_delete"
+            app:iconTint="@color/white"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:backgroundTint="@color/design_default_color_error" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/tvPartofspeech"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Part of speech"
-        android:textSize="16sp"/>
-
-    <TextView
-        android:id="@+id/tvPlural"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Plural"
-        android:textSize="16sp"/>
-
-    <TextView
-        android:id="@+id/tvMeaning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Meaning"
-        android:textSize="16sp" />
-
-    <Button
-        android:id="@+id/btnDelete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Törlés"
-        android:padding="8dp"
-        android:layout_gravity="end"/>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

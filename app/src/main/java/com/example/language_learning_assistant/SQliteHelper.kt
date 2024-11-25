@@ -6,7 +6,6 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import java.lang.Exception
 
 class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -39,20 +38,22 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
         }
     }
 
-
-    fun insertWords(std: WordModel): Long {
+    // Insert a new word
+    fun insertWords(wrd: WordModel): Long {
         val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(ARTICLE, std.article)
-        contentValues.put(NAME, std.name)
-        contentValues.put(PART_OF_SPEECH, std.part_of_speech)
-        contentValues.put(MEANING, std.meaning)
-        contentValues.put(PLURAL, std.plural)
+        val contentValues = ContentValues().apply {
+            put(ARTICLE, wrd.article)
+            put(NAME, wrd.name)
+            put(PART_OF_SPEECH, wrd.part_of_speech)
+            put(MEANING, wrd.meaning)
+            put(PLURAL, wrd.plural)
+        }
         val success = db.insert(TBL_WORDS, null, contentValues)
         db.close()
         return success
     }
 
+    // Retrieve all words
     @SuppressLint("Range")
     fun getAllWords(): ArrayList<WordModel> {
         val wordList: ArrayList<WordModel> = ArrayList()
@@ -69,47 +70,37 @@ class SQLiteHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
 
         if (cursor.moveToFirst()) {
             do {
-                val idIndex = cursor.getColumnIndex(ID)
-                val articleIndex = cursor.getColumnIndex(ARTICLE)
-                val nameIndex = cursor.getColumnIndex(NAME)
-                val partOfSpeechIndex = cursor.getColumnIndex(PART_OF_SPEECH)
-                val meaningIndex = cursor.getColumnIndex(MEANING)
-                val pluralIndex = cursor.getColumnIndex(PLURAL)
+                val id = cursor.getInt(cursor.getColumnIndex(ID))
+                val article = cursor.getString(cursor.getColumnIndex(ARTICLE))
+                val name = cursor.getString(cursor.getColumnIndex(NAME))
+                val partOfSpeech = cursor.getString(cursor.getColumnIndex(PART_OF_SPEECH))
+                val meaning = cursor.getString(cursor.getColumnIndex(MEANING))
+                val plural = cursor.getString(cursor.getColumnIndex(PLURAL))
 
-                if (idIndex != -1 && articleIndex != -1 && nameIndex != -1 && partOfSpeechIndex != -1 && meaningIndex != -1 && pluralIndex != -1) {
-                    val id = cursor.getInt(idIndex)
-                    val article = cursor.getString(articleIndex)
-                    val name = cursor.getString(nameIndex)
-                    val partOfSpeech = cursor.getString(partOfSpeechIndex)
-                    val meaning = cursor.getString(meaningIndex)
-                    val plural = cursor.getString(pluralIndex)
-
-                    val word = WordModel(id, article, name, partOfSpeech, meaning, plural)
-                    wordList.add(word)
-                }
+                val word = WordModel(id, article, name, partOfSpeech, meaning, plural)
+                wordList.add(word)
             } while (cursor.moveToNext())
         }
         cursor.close()
         return wordList
     }
 
-
-    fun updateWords(wrd: WordModel): Int {
+    // Update an existing word
+    fun updateWord(wrd: WordModel): Int {
         val db = this.writableDatabase
-
-        val contentValues = ContentValues()
-        contentValues.put(ARTICLE, wrd.article)
-        contentValues.put(NAME, wrd.name)
-        contentValues.put(PART_OF_SPEECH, wrd.part_of_speech)
-        contentValues.put(MEANING, wrd.meaning)
-        contentValues.put(PLURAL, wrd.plural)
-
-
+        val contentValues = ContentValues().apply {
+            put(ARTICLE, wrd.article)
+            put(NAME, wrd.name)
+            put(PART_OF_SPEECH, wrd.part_of_speech)
+            put(MEANING, wrd.meaning)
+            put(PLURAL, wrd.plural)
+        }
         val success = db.update(TBL_WORDS, contentValues, "$ID=?", arrayOf(wrd.id.toString()))
         db.close()
         return success
     }
 
+    // Delete a word by its ID
     fun deleteWordsByID(id: Int): Int {
         val db = this.writableDatabase
         val success = db.delete(TBL_WORDS, "$ID=?", arrayOf(id.toString()))

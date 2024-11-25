@@ -3,7 +3,15 @@ package com.example.language_learning_assistant
 import android.os.Parcel
 import android.os.Parcelable
 
-data class WordModel(var id: Int = 0, var article: String , var name: String = "", var part_of_speech: String="", var meaning: String = "" , var plural: String = "") : Parcelable {
+data class WordModel(
+    var id: Int = 0,
+    var article: String ,
+    var name: String = "",
+    var part_of_speech: String="",
+    var meaning: String = "" ,
+    var plural: String = ""
+) : Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString() ?: "",

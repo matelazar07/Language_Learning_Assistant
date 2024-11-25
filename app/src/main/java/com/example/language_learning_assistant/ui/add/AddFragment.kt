@@ -1,6 +1,5 @@
-package com.example.language_learning_assistant.ui.home
+package com.example.language_learning_assistant.ui.add
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +15,11 @@ import com.example.language_learning_assistant.R
 import com.example.language_learning_assistant.SQLiteHelper
 import com.example.language_learning_assistant.WordAdapter
 import com.example.language_learning_assistant.WordModel
-import com.example.language_learning_assistant.databinding.FragmentHomeBinding
-import com.example.language_learning_assistant.ui.gallery.GalleryFragment
+import com.example.language_learning_assistant.databinding.FragmentAddBinding
 
-class HomeFragment : Fragment() {
+class AddFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentAddBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var edArticle: EditText
@@ -33,36 +31,32 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var sqLiteHelper: SQLiteHelper
     private var adapter: WordAdapter? = null
-    private var wrd: WordModel? = null
+    private var wordToEdit: WordModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentAddBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         initView(root)
         initRecyclerView()
         sqLiteHelper = SQLiteHelper(requireContext())
 
-        btnAdd.setOnClickListener { addWords() }
-
-
-
-        adapter = WordAdapter()
-        adapter?.setOnClickItem {
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
-            edArticle.setText(it.article)
-            edName.setText(it.name)
-            edPartofspeech.setText(it.part_of_speech)
-            edMeaning.setText(it.meaning)
-            edPlural.setText(it.plural)
-            wrd = it
+        wordToEdit = arguments?.getParcelable("word")
+        wordToEdit?.let { word ->
+            preFillFields(word)
+            btnAdd.text = "Frissítés"
         }
 
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        btnAdd.setOnClickListener {
+            if (wordToEdit == null) {
+                addWords()
+            } else {
+                updateWord()
+            }
+        }
 
         return root
     }
@@ -73,21 +67,19 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
+
     private fun addWords() {
         val article = edArticle.text.toString()
         val name = edName.text.toString()
-        val  part_of_speech = edPartofspeech.text.toString()
+        val part_of_speech = edPartofspeech.text.toString()
         val meaning = edMeaning.text.toString()
         val plural = edPlural.text.toString()
+
         if (name.isEmpty() || meaning.isEmpty()) {
             Toast.makeText(requireContext(), "Kérjük írja be a kötelező mezőket", Toast.LENGTH_SHORT).show()
             edName.error = "Kötelező mező"
             edMeaning.error = "Kötelező mező"
-            edName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            edMeaning.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
         } else {
-            edName.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
-            edMeaning.setHintTextColor(ContextCompat.getColor(requireContext(), R.color.black))
             edName.error = null
             edMeaning.error = null
 
@@ -99,10 +91,56 @@ class HomeFragment : Fragment() {
                 clearEditText()
 
                 getWords()
+
+                // Navigate back to VocabularyFragment
+                activity?.supportFragmentManager?.popBackStack()
             } else {
                 Toast.makeText(requireContext(), "Szó nincs felvétel", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun updateWord() {
+        val article = edArticle.text.toString()
+        val name = edName.text.toString()
+        val part_of_speech = edPartofspeech.text.toString()
+        val meaning = edMeaning.text.toString()
+        val plural = edPlural.text.toString()
+
+        if (name.isEmpty() || meaning.isEmpty()) {
+            Toast.makeText(requireContext(), "Kérjük írja be a kötelező mezőket", Toast.LENGTH_SHORT).show()
+            edName.error = "Kötelező mező"
+            edMeaning.error = "Kötelező mező"
+        } else {
+            edName.error = null
+            edMeaning.error = null
+
+            wordToEdit?.let { word ->
+                word.article = article
+                word.name = name
+                word.part_of_speech = part_of_speech
+                word.meaning = meaning
+                word.plural = plural
+
+                val status = sqLiteHelper.updateWord(word)
+                if (status > -1) {
+                    Toast.makeText(requireContext(), "Szó frissítése sikeres", Toast.LENGTH_SHORT).show()
+
+                    // Navigate back to VocabularyFragment
+                    activity?.supportFragmentManager?.popBackStack()
+                } else {
+                    Toast.makeText(requireContext(), "Szó frissítése sikertelen", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun preFillFields(word: WordModel) {
+        edArticle.setText(word.article)
+        edName.setText(word.name)
+        edPartofspeech.setText(word.part_of_speech)
+        edMeaning.setText(word.meaning)
+        edPlural.setText(word.plural)
     }
 
     private fun getWords() {
@@ -118,17 +156,16 @@ class HomeFragment : Fragment() {
         edPlural.setText("")
     }
 
+
     private fun initView(view: View) {
         edName = view.findViewById(R.id.edName)
-        edPartofspeech = view.findViewById(R.id.edPartofspeech)
+        edPartofspeech = view.findViewById(R.id.edWordType)
         edArticle = view.findViewById(R.id.edArticle)
         edPlural = view.findViewById(R.id.edPlural)
         edMeaning = view.findViewById(R.id.edMeaning)
         btnAdd = view.findViewById(R.id.btnAdd)
         recyclerView = view.findViewById(R.id.recyclerView)
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

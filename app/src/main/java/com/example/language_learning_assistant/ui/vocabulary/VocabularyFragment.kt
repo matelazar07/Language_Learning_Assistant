@@ -1,4 +1,4 @@
-package com.example.language_learning_assistant.ui.gallery
+package com.example.language_learning_assistant.ui.vocabulary
 
 import android.app.DownloadManager
 import android.app.NotificationChannel
@@ -17,27 +17,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.language_learning_assistant.R
 import com.example.language_learning_assistant.SQLiteHelper
 import com.example.language_learning_assistant.WordAdapter
 import com.example.language_learning_assistant.WordModel
-import com.example.language_learning_assistant.databinding.FragmentGalleryBinding
+import com.example.language_learning_assistant.databinding.FragmentVocabularyBinding
 import java.io.File
 import java.io.OutputStreamWriter
 import java.util.Locale
 
-class GalleryFragment : Fragment() {
+class VocabularyFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentVocabularyBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
@@ -51,7 +51,7 @@ class GalleryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentVocabularyBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         edSearch = binding.edSearch
@@ -62,35 +62,39 @@ class GalleryFragment : Fragment() {
 
 
 
-        // Initialize adapter and RecyclerView
         adapter = WordAdapter()
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        // Get the words from arguments
         wordList = arguments?.getParcelableArrayList("WORD_LIST") ?: ArrayList()
-        adapter.addItems(wordList) // Update adapter with the initial word list
+        adapter.addItems(wordList)
 
         sqLiteHelper = SQLiteHelper(requireContext())
-        getWords() // Load words from the database
+        getWords()
 
-        // Save button to save data to a file
         val btnSave = binding.btnSave
         btnSave.setOnClickListener {
             saveDataToTxtFile()
         }
 
-        // Download button to download data
+        adapter.setOnClickEditItem { word ->
+            val bundle = Bundle().apply {
+                putParcelable("word", word)
+            }
+
+            findNavController().navigate(R.id.action_nav_vocabulary_to_nav_add, bundle)
+        }
+
+
+
         val btnDownload = binding.btnDownload
         btnDownload.setOnClickListener {
             downloadData()
         }
 
-        // Set up delete item click listener
         adapter.setOnClickDeleteItem { deleteWord(it.id) }
 
-        // Setup search functionality
         edSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -113,8 +117,8 @@ class GalleryFragment : Fragment() {
     }
 
     private fun getWords() {
-        wordList = sqLiteHelper.getAllWords() // Fetch all words from the database
-        adapter.addItems(wordList) // Update the adapter with the new list
+        wordList = sqLiteHelper.getAllWords()
+        adapter.addItems(wordList)
     }
 
     private fun toggleSearchVisibility() {
