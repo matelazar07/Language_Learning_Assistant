@@ -9,8 +9,7 @@
 
     <string name="menu_vocabulary">Szótárfüzet</string>
     <string name="menu_add">Felvétel / Szerkesztés</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="gallery_activity_label">Gallery</string>
+    <string name="menu_slideshow">Alkalmazáskalauz</string>
 
     <!-- Egyéb meglévő sztringek -->
     <string name="app_logo">Germany App Logo</string>
@@ -39,5 +38,92 @@
     <string name="item_meaning">Meaning</string>
     <string name="item_edit_BUTTON">Szerkesztés</string>
     <string name="item_delete_BUTTON">Törlés</string>
+
+    <!-- APP GUIDE -->
+    <string name="guide_TITLE">ALKALMAZÁSKALAUZ</string>
+    <string name="guide_greeting">Köszöntünk a német nyelvű szótárfüzet alkalmazásunkban!</string>
+
+
+    <!-- első lépések -->
+    <string name="guide_p1_h1">Első lépések</string>
+    <string name="guide_p1_h2">Első indítás</string>
+    <string name="guide_p1_h2_t1">
+        Az alkalmazás a főképernyővel nyílik meg, amely megjeleníti a meglévő szókincset, vagy felszólít új szavak hozzáadására.
+    </string>
+
+    <string name="guide_p1_h2_2">Engedélyek</string>
+    <string name="guide_p1_h2_2_t1">
+        Az első indításkor az alkalmazás hozzáférést kér a tárhelyhez, hogy elmentse és visszakeresse a szókincsbeli adatokat.
+    </string>
+
+
+    <!-- fő funkciók -->
+    <string name="guide_p2_h1">Fő funkciók</string>
+
+    <string name="guide_p2_h2">Szótárfüzet</string>
+    <string name="guide_p2_h2_t1">
+        A bal oldalról elérhető “ablakfiókban” a első lehetőség alatt érhető el. Itt jelennek meg a szótárba már korábban felvett szavak, amelyeket lehet szerkeszteni vagy törölni.
+    </string>
+    <string name="guide_p2_h2_t2">
+        Megjeleníti a mentett szavak listáját. Minden elem mutatja a szót és annak fordítását és további tulajdonságait.
+    </string>
+
+    <string name="guide_p2_h2_2">Szavak felvétele/szerkesztése</string>
+    <string name="guide_p2_h2_2_t1">
+        A bal oldalról elérhető “ablakfiókban” a második lehetőség alatt érhető el az az oldal, ahol új szavakat lehet felvenni a szótárba vagy meglévőket szerkeszteni.
+    </string>
+    <string name="guide_p2_h2_2_t2">
+        Adja meg a szót, annak fordítását és opcionális jegyzeteket. Mentse el, hogy hozzáadja a szókincslistához.
+    </string>
+
+    <string name="guide_p2_h2_3">Útmutató</string>
+    <string name="guide_p2_h2_3_t1">
+        A bal oldalról elérhető “ablakfiókban” a harmadik lehetőség alatt lehet megtalálni az applikációhoz tartozó útmutatót (amit jelenleg is olvas).
+    </string>
+
+
+    <!-- navigációs tippek -->
+    <string name="guide_title3">Navigációs tippek</string>
+
+    <!-- Navigációs fiók -->
+    <string name="guide_p3_h2">Navigációs fiók</string>
+    <string name="guide_p3_h2_t1">
+        Használja a bal oldalon található navigációs fiókot a nézetek közötti váltáshoz.
+    </string>
+
+    <!-- Keresés a szókincsben -->
+    <string name="guide_p3_h2_2">Keresés a szókincsben</string>
+    <string name="guide_p3_h2_2_t1">
+        Használja a főképernyőn található keresőikont, hogy gyorsan megtaláljon egy adott szót.
+    </string>
+
+    <!-- Szavak szerkesztése -->
+    <string name="guide_p3_h2_3">Szavak szerkesztése</string>
+    <string name="guide_p3_h2_3_t1">
+        Nyomja meg a sárga gombot a szó jobb oldalán, amelyen egy ceruza ikon látható.
+    </string>
+
+    <!-- Szavak törlése -->
+    <string name="guide_p3_h2_4">Szavak törlése</string>
+    <string name="guide_p3_h2_4_t1">
+        Nyomja meg a piros gombot a szó jobb oldalán, amelyen egy kuka ikon látható.
+    </string>
+
+
+    <!-- hibaelhárítás -->
+    <string name="guide_title4">Hibaelhárítás</string>
+
+    <string name="guide_p4_h2">Problémák a szavak mentésével</string>
+    <string name="guide_p4_h2_t1">
+        Győződjön meg róla, hogy az alkalmazás rendelkezik a megfelelő tárhely-hozzáférési engedélyekkel.
+    </string>
+
+    <string name="guide_p4_h2_2">Az alkalmazás nem tölt be megfelelően</string>
+    <string name="guide_p4_h2_2_t1">
+        Indítsa újra az alkalmazást, vagy törölje annak gyorsítótárát az eszköz beállításain keresztül.
+    </string>
+
+
+    <string name="guide_farewell">Kellemes tanulást!</string>
 
 </resources>
